@@ -10,12 +10,12 @@ jobs:
     steps:
       - name: Ping Project 1
         run: |
-          curl -s -o /dev/null -w "%{http_code}\n" "${{ secrets.PROJECT1_URL }}/rest/v1/" \
+          curl -s -o /dev/null -w "%{http_code}\n" "${{ secrets.PROJECT1_URL }}/rest/v1/keep_alive_test?select=id&limit=1" \
           -H "apikey: ${{ secrets.PROJECT1_KEY }}" \
           -H "Authorization: Bearer ${{ secrets.PROJECT1_KEY }}"
           
       - name: Ping Project 2
         run: |
-          curl -s -o /dev/null -w "%{http_code}\n" "${{ secrets.PROJECT2_URL }}/rest/v1/" \
+          curl -s -o /dev/null -w "%{http_code}\n" "${{ secrets.PROJECT2_URL }}/rest/v1/keep_alive_test?select=id&limit=1" \
           -H "apikey: ${{ secrets.PROJECT2_KEY }}" \
           -H "Authorization: Bearer ${{ secrets.PROJECT2_KEY }}"
