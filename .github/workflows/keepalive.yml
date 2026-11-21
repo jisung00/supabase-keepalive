@@ -1,13 +1,14 @@
-name: Wake Up Supabase
+name: Keep Supabase Alive
 on:
   schedule:
-    - cron: '0 6 * * *' # 每天北京时间 14:00 自动运行
+    - cron: '0 0 * * *' # 每天 UTC 0点（北京时间早上8点）自动运行
   workflow_dispatch: # 支持手动点击运行
 jobs:
-  keepalive:
+  ping:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: wilhelmsendk/wake-up-supabase@main
-        with:
-          supabase_projects_json: ${{ secrets.SUPABASE_PROJECTS_JSON }}
+      - name: Ping Supabase
+        run: |
+          curl -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/" \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}"
