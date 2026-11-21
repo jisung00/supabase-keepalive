@@ -1,0 +1,13 @@
+name: Wake Up Supabase
+on:
+  schedule:
+    - cron: '0 6 * * *' # 每天北京时间 14:00 自动运行
+  workflow_dispatch: # 支持手动点击运行
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wilhelmsendk/wake-up-supabase@main
+        with:
+          supabase_projects_json: ${{ secrets.SUPABASE_PROJECTS_JSON }}
