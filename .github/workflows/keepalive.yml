@@ -1,14 +1,21 @@
 name: Keep Supabase Alive
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天 UTC 0点（北京时间早上8点）自动运行
-  workflow_dispatch: # 支持手动点击运行
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase
+      - name: Ping Project 1
         run: |
-          curl -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/" \
-          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}"
+          curl -s -o /dev/null -w "%{http_code}\n" "${{ secrets.PROJECT1_URL }}/rest/v1/" \
+          -H "apikey: ${{ secrets.PROJECT1_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.PROJECT1_KEY }}"
+          
+      - name: Ping Project 2
+        run: |
+          curl -s -o /dev/null -w "%{http_code}\n" "${{ secrets.PROJECT2_URL }}/rest/v1/" \
+          -H "apikey: ${{ secrets.PROJECT2_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.PROJECT2_KEY }}"
